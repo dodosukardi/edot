@@ -56,7 +56,7 @@ const App = () => {
     setData(tempData);
   };
 
-  const loopBulk = (like, dislike) => {
+  const bulkHandler = (like, dislike) => {
     let tempData = [...data];
 
     for (let i = 0; i < tempData.length; i += 1) {
@@ -67,31 +67,21 @@ const App = () => {
     setData(tempData);
   }
 
-  const bulkHandler = (type) => {
-    if (type === 'like') {
-      loopBulk(true, false);
-    } else if (type === 'dislike') {
-      loopBulk(false, true);
-    } else {
-      loopBulk(false, false);
-    }
-  };
-
   return (
     <View style={styles.wrapper}>
       <View style={styles.topButtonsContainer}>
         <Button
-          onPress={() => bulkHandler('like')}
+          onPress={() => bulkHandler(true, false)}
           type="primary"
           text="Like All"
         />
         <Button
-          onPress={() => bulkHandler('reset')}
+          onPress={() => bulkHandler(false, false)}
           type="light"
           text="Reset All"
         />
         <Button
-          onPress={() => bulkHandler('dislike')}
+          onPress={() => bulkHandler(false, true)}
           type="danger"
           text="Dislike All"
         />
