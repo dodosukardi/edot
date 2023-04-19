@@ -31,14 +31,14 @@ const App = () => {
     id: 1,
     img: require('./src/images/1.jpg'),
     likes: 100,
-    isLike: null,
-    isDislike: null,
+    isLike: false,
+    isDislike: false,
   }, {
     id: 2,
     img: require('./src/images/2.jpg'),
     likes: 85,
-    isLike: null,
-    isDislike: null,
+    isLike: false,
+    isDislike: false,
   }]);
 
   const eachHandler = (id, type) => {
@@ -46,37 +46,35 @@ const App = () => {
     const objIndex = data.findIndex((obj => obj.id === id));
 
     if (type === 'like') {
-      tempData[objIndex].isLike = tempData[objIndex].isLike === null || null;
-      tempData[objIndex].isDislike = null;
+      tempData[objIndex].isLike = !tempData[objIndex].isLike || false;
+      tempData[objIndex].isDislike = false;
     } else {
-      tempData[objIndex].isDislike = tempData[objIndex].isDislike === null || null;
-      tempData[objIndex].isLike = null;
+      tempData[objIndex].isDislike = !tempData[objIndex].isDislike || false;
+      tempData[objIndex].isLike = false;
     }
 
     setData(tempData);
   };
 
-  const bulkHandler = (type) => {
+  const loopBulk = (like, dislike) => {
     let tempData = [...data];
 
-    if (type === 'like') {
-      for (let i = 0; i < tempData.length; i += 1) {
-        tempData[i].isLike = true;
-        tempData[i].isDislike = null;
-      }
-    } else if (type === 'dislike') {
-      for (let i = 0; i < tempData.length; i += 1) {
-        tempData[i].isLike = null;
-        tempData[i].isDislike = true;
-      }
-    } else {
-      for (let i = 0; i < tempData.length; i += 1) {
-        tempData[i].isLike = null;
-        tempData[i].isDislike = null;
-      }
+    for (let i = 0; i < tempData.length; i += 1) {
+      tempData[i].isLike = like;
+      tempData[i].isDislike = dislike;
     }
 
     setData(tempData);
+  }
+
+  const bulkHandler = (type) => {
+    if (type === 'like') {
+      loopBulk(true, false);
+    } else if (type === 'dislike') {
+      loopBulk(false, true);
+    } else {
+      loopBulk(false, false);
+    }
   };
 
   return (
